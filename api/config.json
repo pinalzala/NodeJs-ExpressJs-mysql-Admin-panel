@@ -1,0 +1,21 @@
+{
+    "imagepath":"../nodeadmin/public/assets/images/",
+    "FULLBASEROOT": "http://localhost:3000/",
+    "database": {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "",
+        "database": "nodebackend"
+    },
+    "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+    "emailFrom": "abhyasamtest@gmail.com",
+    "smtpOptions": {
+        "host":"smtp.gmail.com",
+        "port": 587,
+        "auth": {
+            "user": "abhyasamtest@gmail.com",
+            "pass": "abhyasam123**"
+        }
+    }
+} 

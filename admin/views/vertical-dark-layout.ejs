@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8" />
+  <title><%- title %> | Admiria - Admin & Dashboard Template</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+  <meta content="Themesbrand" name="author">
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="/public/assets/images/favicon.ico">
+
+  <%- HeaderCss %>
+  <!-- Bootstrap Css -->
+  <link href="/public/assets/css/bootstrap-dark.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <!-- Icons Css -->
+  <link href="/public/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <!-- App Css-->
+  <link href="/public/assets/css/app-dark.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body data-sidebar="dark">
+
+  <!-- Loader -->
+  <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+    <%- include ('./Partials/Header')  %>
+    <%- include ('./Partials/Sidebar')  %>
+
+    <div class="main-content">
+      <div class="page-content">
+        <div class="container-fluid">
+          <%- body %>
+        </div>
+      </div>
+      <%- include ('./Partials/Footer') %>
+    </div>
+  </div>
+
+  <%- include ('./Partials/Rightbar')  %>
+  <%- include ('./Partials/VendorScript')  %>
+
+  <%- FooterJs %>
+
+  <script src="/public/assets/js/app-dark.js"></script>
+  <%- BottomJs %>
+</body>
+
+</html>

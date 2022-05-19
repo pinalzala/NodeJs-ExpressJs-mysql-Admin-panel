@@ -1,0 +1,8 @@
+{
+
+  "imagepath":"/public/assets/images/",
+  "url":"http://localhost:4000/api/",
+  "base_url" : "/",
+  "base" : ""
+  
+} 

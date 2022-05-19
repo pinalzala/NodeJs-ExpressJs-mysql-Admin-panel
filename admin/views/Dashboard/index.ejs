@@ -1,0 +1,165 @@
+<%- contentFor('HeaderCss') %>
+    <!-- C3 Chart css -->
+    <link href="public/assets/libs/c3/c3.min.css" rel="stylesheet" type="text/css">
+
+<%- contentFor('breadcrumb') %>
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Horizontal Layout</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Layouts</a></li>
+                    <li class="breadcrumb-item active">Horizontal Layout</li>
+                </ol>
+            </div>
+            
+        </div>
+    </div>
+</div>     
+<!-- end page title -->
+
+<%- contentFor('body') %>
+    <div class="row">
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon bg-purple me-0 float-end"><i
+                                class="mdi mdi-basket"></i></span>
+                        <div class="mini-stat-info">
+                            <span class="counter text-purple">25140</span>
+                            Total Sales
+                        </div>
+                        <p class=" mb-0 mt-4 text-muted">Total income: $22506 <span class="float-end"><i
+                                    class="fa fa-caret-up me-1"></i>10.25%</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End col -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon bg-blue-grey me-0 float-end"><i
+                                class="mdi mdi-black-mesa"></i></span>
+                        <div class="mini-stat-info">
+                            <span class="counter text-blue-grey">65241</span>
+                            New Orders
+                        </div>
+                        <p class="text-muted mb-0 mt-4">Total income: $22506 <span class="float-end"><i
+                                    class="fa fa-caret-up me-1"></i>10.25%</span></p>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End col -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon bg-brown me-0 float-end"><i
+                                class="mdi mdi-buffer"></i></span>
+                        <div class="mini-stat-info">
+                            <span class="counter text-brown">85412</span>
+                            New Users
+                        </div>
+                        <p class="text-muted mb-0 mt-4">Total income: $22506 <span class="float-end"><i
+                                    class="fa fa-caret-up me-1"></i>10.25%</span></p>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End col -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon bg-teal me-0 float-end"><i
+                                class="mdi mdi-coffee"></i></span>
+                        <div class="mini-stat-info">
+                            <span class="counter text-teal">20544</span>
+                            Unique Visitors
+                        </div>
+                        <p class="text-muted mb-0 mt-4">Total income: $22506 <span class="float-end"><i
+                                    class="fa fa-caret-up me-1"></i>10.25%</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end col -->
+    </div> <!-- end row-->
+
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-md-12 monthly-earning-wid">
+                    <div class="card" style="height: 480px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Monthly Earnings</h4>
+
+                            <div class="text-center">
+                                <div class="btn-group mt-4" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary">Day</button>
+                                    <button type="button" class="btn btn-secondary">Month</button>
+                                    <button type="button" class="btn btn-secondary">Year</button>
+                                </div>
+                            </div>
+
+                            <div id="combine-chart" dir="ltr"></div>
+
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+
+        </div>
+
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-md-12 monthly-earning-wid">
+                    <div class="card" style="height: 480px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Monthly Earnings</h4>
+
+                            <div class="text-center">
+                                <div class="btn-group mt-4" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary">Day</button>
+                                    <button type="button" class="btn btn-secondary">Month</button>
+                                    <button type="button" class="btn btn-secondary">Year</button>
+                                </div>
+                            </div>
+
+                            <div id="donut-chart" dir="ltr"></div>
+
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+
+    </div>
+
+
+    
+
+  
+    <!-- end row -->
+
+
+<%- contentFor('FooterJs') %>
+    <!-- Peity chart-->
+    <script src="public/assets/libs/peity/jquery.peity.min.js"></script>
+
+    <!--C3 Chart-->
+    <script src="public/assets/libs/d3/d3.min.js"></script>
+    <script src="public/assets/libs/c3/c3.min.js"></script>
+
+    <script src="public/assets/libs/jquery-knob/jquery.knob.min.js"></script>
+
+    <script src="public/assets/js/pages/dashboard.init.js"></script>
+
+<%- contentFor('BottomJs') %>

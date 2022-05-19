@@ -1,0 +1,116 @@
+<%- contentFor('HeaderCss') %>
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+<script src="//cdn.ckeditor.com/4.5.5/standard/ckeditor.js"></script>
+
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="alertmsg"></div>
+                    <form method="post" class="needs-validation" id="editfaq" enctype="multipart/form-data" novalidate>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Question</label>
+                            <div class="col-sm-9">
+                                <textarea name="question" class="ckeditor" id="question"><%=responsetest.question%></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Answer</label>
+                            <div class="col-sm-9">
+                                <textarea name="answer" class="ckeditor" id="answer"><%=responsetest.answer%></textarea>
+                            </div>
+                        </div>
+                        
+                      
+                         
+                          
+                       
+                   
+                    <div class="row mb-3">
+                        <div>
+                            <button type="button" onclick="editfaq()" class="btn btn-primary waves-effect waves-light me-1">
+                                Submit
+                            </button>
+                            <a href="<%=base%>/faq"><button type="button" href="<%=base%>/faq" class="btn btn-secondary waves-effect">
+                                Back
+                            </button></a>
+                        </div>
+                    </div>
+                   </form>
+                    
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+    <script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+<script>
+      
+
+function editfaq(){
+
+	var question=$('#question').val();
+	var answer=$('#answer').val();
+	
+
+	for (instance in CKEDITOR.instances) {
+        CKEDITOR.instances[instance].updateElement();
+    }
+
+    var frm = $('#editfaq').serialize();
+  
+   var data=frm; 
+
+  $.ajax({
+    type: 'PUT',
+    dataType : 'json',
+    url: '<%=urlapi%>updatefaq/<%=id%>',
+    data: data,
+    
+    success: function (data) {
+        if(data.status == 'danger')
+        {
+            document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+        }
+        else{
+            document.getElementById('alertmsg').innerHTML='<div class="alert alert-'+data.status+' alert-dismissible fade show" role="alert"><strong>'+data.status+'!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+        }
+    },
+    error: function(request, status, error) {
+        var string = request.responseJSON.message.split(",");
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+string[0]+'.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+  });
+
+  
+
+}
+
+</script>
+
+<%- contentFor('FooterJs') %>
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+rel="stylesheet" type="text/css" />
+<script src="/public/assets/libs/select2/js/select2.min.js"></script>
+<script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script
+src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+<script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+<script src="/public/assets/js/pages/form-advanced.init.js"></script>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+<script src="/public/assets/js/pages/form-validation.init.js"></script>
+<%- contentFor('BottomJs') %>

@@ -1,0 +1,225 @@
+<%- contentFor('HeaderCss') %>
+
+<!-- DataTables -->
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
+
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+<style>
+    td
+    {
+        white-space: normal !important;
+
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="alertmsg"></div>
+                <a href="<%=base%>/addcms"> <button style="float: right;" type="button" class="btn btn-primary waves-effect waves-light">Add New</button>
+                </a>
+                <div style="float: right;margin-right: 1%;" class="btn-group me-1">
+                    <button type="button"  class="btn btn-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Action <i class="mdi mdi-chevron-down"></i></button>
+                    <div class="dropdown-menu" data-popper-placement="bottom-start" style="margin: 0px; position: absolute; inset: 0px auto auto 0px; transform: translate(0px, 37px);">
+                        <a class="dropdown-item" onclick="cmsstatuschange(1)">Active</a>
+                        <a class="dropdown-item" onclick="cmsstatuschange(2)">InActive</a>
+                        
+                    </div>
+                </div>
+                <table id="datatable" class="table table-striped dt-responsive nowrap table-vertical" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th><input type="checkbox" id="master"></th>
+                        <th>Page Title</th>
+                        <th>Page Slug</th>
+                        <th>Status</th>
+                        <th>Options</th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+        
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel"> View Details                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                <tr>
+                                    <th style="width: 50%;">Page Title</th>
+                                    <td><span id="name">name</span></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 50%;">Page Slug</th>
+                                        <td><span id="slug">testimonial</span></td>
+                                    </tr>
+                                   
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+
+<%- contentFor('FooterJs') %>
+<script>
+    $( document ).ready(function() {
+    getcmsdata()
+});
+  
+    function viewdata(name,slug)
+    {
+     document.getElementById('name').innerHTML=name;
+     document.getElementById('slug').innerHTML=slug;  
+    } 
+    $('#master').on('click', function(e) {  
+         if($(this).is(':checked',true))    
+         {  
+            $(".sub_chk").prop('checked', true);    
+         } else {    
+            $(".sub_chk").prop('checked',false);    
+         }    
+        });  
+        function cmsstatuschange(statusid){
+    if(statusid == 1)
+    {
+   var statusname="to Activate selected Cms";
+   var button = "Activate";
+    }
+    if(statusid == 2)
+    {
+        var statusname="to Inactivate selected Cms";
+        var button = "Inactivate";
+    }
+    
+            var allVals = [];    
+            $(".sub_chk:checked").each(function() {    
+                allVals.push($(this).attr('data-id'));  
+            });    
+   
+            if(allVals.length <=0)    
+            {    
+                alert("Please select row.");    
+            } 
+            else
+            {
+
+            
+   Swal.fire({
+           title: "Are you sure?",
+           text: statusname,
+           icon: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#4ac18e",
+           cancelButtonColor: "#f46a6a",
+           confirmButtonText: button
+         }).then(function (result) {
+           if (result.value) {
+            var join_selected_values = allVals.join(",");   
+               $.ajax({
+type: 'post',
+dataType : 'json',
+url: '<%=urlapi%>statuschangecms',
+data: 'status='+statusid+'&id='+join_selected_values, 
+success: function (data) {
+   
+   
+   getcmsdata();
+  document.getElementById('alertmsg').innerHTML='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong>  '+ statusname +' successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+},
+error: function(request, status, error) {
+   document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>  '+ statusname +' failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+}
+});
+           }
+       });
+    }
+}
+function getcmsdata(){
+
+        var table;
+    table = $('#datatable').DataTable();
+    table.clear().draw();
+               $.ajax({
+type: 'GET',
+dataType : 'json',
+url: '<%=urlapi%>getallcms',
+
+success: function (data) {
+    for (var i = 0; i < data.length; i++) {
+        if(data[i].status == 1)
+        {
+            var status='<span class="badge bg-success">Active</span>'
+        }
+        else
+        {
+            var status='<span class="badge bg-danger">Inactive</span>'
+        }
+        var action='<a onclick="viewdata(\'' + data[i].page_name + '\',\'' + data[i].page_slug + '\')"  data-bs-toggle="modal" data-bs-target="#myModal" class="me-3 text-muted"><i class="mdi mdi-eye font-size-18"></i></a><a href="<%=base%>/editcms?id='+data[i].id+'" class="me-3 text-muted"><i class="mdi mdi-pencil font-size-18"></i></a>'
+        var checkbox='<input type="checkbox" class="sub_chk" data-id="'+data[i].id+'">'
+   table.row.add(['',checkbox,data[i].page_name,data[i].page_slug,status,action]);
+   
+ }
+table.draw();
+  },
+error: function(request, status, error) {
+}
+});
+window.scrollTo(0, document.body.scrollHeight);    
+    
+}
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- Required datatable js -->
+
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script> 
+
+<%- contentFor('BottomJs') %>

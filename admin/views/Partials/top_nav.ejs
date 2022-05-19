@@ -1,0 +1,343 @@
+<header id="page-topbar">
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="<%= base %>/" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="/public/assets/images/logo.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/public/assets/images/logo-dark.png" alt="" height="30">
+                    </span>
+                </a>
+
+                <a href="<%= base %>/" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="/public/assets/images/logo-light.png" alt="" height="22">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="/public/assets/images/logo-light.png" alt="" height="30">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm me-2 font-size-24 d-lg-none header-item waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+                <i class="mdi mdi-menu"></i>
+            </button>
+            
+        </div>
+
+          
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src="/public/assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a class="dropdown-item" href="#"><%=translation.Profile%></a>
+                    <a class="dropdown-item" href="#"><%=translation.My_Wallet%></a>
+                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><%=translation.Settings%></a>
+                    <a class="dropdown-item" href="#"><%=translation.Lock_screen%></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="<%= base %>/logout"><%=translation.Logout%></a>
+                </div>
+            </div>
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                    <i class="mdi mdi-spin mdi-cog"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<div class="topnav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+            <div class="collapse navbar-collapse" id="topnav-menu-content">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button"
+                            >
+                            <i class="mdi mdi-view-dashboard me-2"></i><%=translation.Dashboard%> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="topnav-dashboard">
+                            <a href="<%= base %>/" class="dropdown-item"><%=translation.Dashboard_One%></a>
+                            <a href="dashboard-2" class="dropdown-item"><%=translation.Dashboard_Two%></a>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-ui kit" role="button"
+                            >
+                            <i class="mdi mdi-buffer me-2"></i><%=translation.UI_Kit%> <div class="arrow-down"></div>
+                        </a>
+
+                        <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl dropdown-menu-left"
+                            aria-labelledby="topnav-ui kit">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div>
+                                        <a href="ui-buttons" class="dropdown-item"><%=translation.Buttons%></a>
+                                        <a href="ui-colors" class="dropdown-item"><%=translation.Colors%></a>
+                                        <a href="ui-cards" class="dropdown-item"><%=translation.Cards%></a>
+                                        <a href="ui-tabs-accordions" class="dropdown-item"><%=translation.Tabs_and_Accordions%></a>
+                                        <a href="ui-modals" class="dropdown-item"><%=translation.Modals%></a>
+                                        <a href="ui-images" class="dropdown-item"><%=translation.Images%></a>
+                                        <a href="ui-alerts" class="dropdown-item"><%=translation.Alerts%></a>
+                                        <a href="ui-progressbars" class="dropdown-item"><%=translation.Progress_Bars%></a>
+                                        <a href="ui-dropdowns" class="dropdown-item"><%=translation.Dropdowns%></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div>
+                                        <a href="ui-lightbox" class="dropdown-item"><%=translation.Lightbox%></a>
+                                        <a href="ui-navs" class="dropdown-item"><%=translation.Navs%></a>
+                                        <a href="ui-pagination" class="dropdown-item"><%=translation.Pagination%></a>
+                                        <a href="ui-popover-tooltips" class="dropdown-item"><%=translation.Popover_and_Tooltips%></a>
+                                        <a href="ui-badge" class="dropdown-item"><%=translation.Badge%></a>
+                                        <a href="ui-carousel" class="dropdown-item"><%=translation.Carousel%></a>
+                                        <a href="ui-video" class="dropdown-item"><%=translation.Video%></a>
+                                        <a href="ui-typography" class="dropdown-item"><%=translation.Typography%></a>
+                                        <a href="ui-sweet-alert" class="dropdown-item"><%=translation.Sweet_Alert%></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div>
+                                        <a href="ui-grid" class="dropdown-item"><%=translation.Grid%></a>
+                                        <a href="ui-animation" class="dropdown-item"><%=translation.Animation%></a>
+                                        <a href="ui-highlight" class="dropdown-item"><%=translation.Highlight%></a>
+                                        <a href="ui-rating" class="dropdown-item"><%=translation.Rating%></a>
+                                        <a href="ui-nestable" class="dropdown-item"><%=translation.Nestable%></a>
+                                        <a href="ui-alertify" class="dropdown-item"><%=translation.Alertify%></a>
+                                        <a href="ui-rangeslider" class="dropdown-item"><%=translation.Range_Slider%></a>
+                                        <a href="ui-sessiontimeout" class="dropdown-item"><%=translation.Session_Timeout%></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button"
+                            >
+                            <i class="mdi mdi-cube-outline me-2"></i><%=translation.Components%> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email"
+                                    role="button" >
+                                    <%=translation.Email%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-email">
+                                    <a href="email-inbox" class="dropdown-item"><%=translation.Inbox%></a>
+                                    <a href="email-read" class="dropdown-item"><%=translation.Email_Read%></a>
+                                    <a href="email-compose" class="dropdown-item"><%=translation.Email_Compose%></a>
+                                </div>
+                            </div>
+
+                            <a href="widgets" class="dropdown-item"><%=translation.Widgets%></a>
+
+
+                            <a href="calendar" class="dropdown-item"><%=translation.Calendar%></a>
+
+
+                            
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-forms"
+                                    role="button" >
+                                    <%=translation.Forms%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-forms">
+                                    <a href="form-elements" class="dropdown-item"><%=translation.Form_Elements%></a>
+                                    <a href="form-validation" class="dropdown-item"><%=translation.Form_Validation%></a>
+                                    <a href="form-advanced" class="dropdown-item"><%=translation.Form_Advanced%></a>
+                                    <a href="form-wizard" class="dropdown-item"><%=translation.Form_Wizard%></a>
+                                    <a href="form-editors" class="dropdown-item"><%=translation.Form_Editors%></a>
+                                    <a href="form-uploads" class="dropdown-item"><%=translation.Form_File_Upload%></a>
+                                    <a href="form-mask" class="dropdown-item"><%=translation.Form_Mask%></a>
+                                    <a href="form-xeditable" class="dropdown-item"><%=translation.Form_Xeditable%></a>
+                                </div>
+                            </div>
+                            
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-chart"
+                                    role="button" >
+                                    <%=translation.Charts%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-chart">
+                                    <a href="charts-morris" class="dropdown-item"><%=translation.Morris_Chart%></a>
+                                    <a href="charts-chartist" class="dropdown-item"><%=translation.Chartist_Chart%></a>
+                                    <a href="charts-chartjs" class="dropdown-item"><%=translation.Chartjs_Chart%></a>
+                                    <a href="charts-flot" class="dropdown-item"><%=translation.Flot_Chart%></a>
+                                    <a href="charts-c3" class="dropdown-item"><%=translation.C3_Chart%></a>
+                                    <a href="charts-sparkline" class="dropdown-item"><%=translation.Sparkline_Chart%></a>
+                                    <a href="charts-other" class="dropdown-item"><%=translation.Jquery_Knob_Chart%></a>
+                                    <a href="charts-peity" class="dropdown-item"><%=translation.Peity_Chart%></a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-tables"
+                                    role="button" >
+                                    <%=translation.Tables%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-tables">
+                                    <a href="tables-basic" class="dropdown-item"><%=translation.Basic_Tables%></a>
+                                    <a href="tables-datatable" class="dropdown-item"><%=translation.Data_Table%></a>
+                                    <a href="tables-responsive" class="dropdown-item"><%=translation.Responsive_Table%></a>
+                                    <a href="tables-editable" class="dropdown-item"><%=translation.Editable_Table%></a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons"
+                                    role="button" >
+                                    <%=translation.Icons%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-icons">
+                                    <a href="icons-material" class="dropdown-item"><%=translation.Material_Design%></a>
+                                    <a href="icons-ion" class="dropdown-item"><%=translation.Ion_Icons%></a>
+                                    <a href="icons-fontawesome" class="dropdown-item"><%=translation.Font_Awesome%></a>
+                                    <a href="icons-themify" class="dropdown-item"><%=translation.Themify_Icons%></a>
+                                    <a href="icons-dripicons" class="dropdown-item"><%=translation.Dripicons%></a>
+                                    <a href="icons-typicons" class="dropdown-item"><%=translation.Typicons_Icons%></a>
+                                    <a href="icons-weather" class="dropdown-item"><%=translation.Weather_Icons%></a>
+                                    <a href="icons-mobirise" class="dropdown-item"><%=translation.Mobirise_Icons%></a>
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-maps"
+                                    role="button" >
+                                    <%=translation.Maps%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-maps">
+                                    <a href="maps-google" class="dropdown-item"> <%=translation.Google_Map%></a>
+                                    <a href="maps-vector" class="dropdown-item"> <%=translation.Vector_Map%></a>
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email-templates"
+                                    role="button" >
+                                    <%=translation.Email_Templates%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-email-templates">
+                                    <a href="email-templates-basic" class="dropdown-item"><%=translation.Basic_Action_Email%></a>
+                                    <a href="email-templates-alert" class="dropdown-item"><%=translation.Alert_Email%></a>
+                                    <a href="email-templates-billing" class="dropdown-item"><%=translation.Billing_Email%></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button"
+                            >
+                            <i class="mdi mdi-book-multiple-outline me-2"></i><%=translation.Pages%> <div class="arrow-down"></div>
+                        </a>
+
+                        <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl dropdown-menu-left"
+                            aria-labelledby="topnav-pages">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div>
+                                        <a href="pages-login" class="dropdown-item"><%=translation.Login%></a>
+                                        <a href="pages-register" class="dropdown-item"><%=translation.Register%></a>
+                                        <a href="pages-recoverpw" class="dropdown-item"><%=translation.Recover_Password%></a>
+                                        <a href="pages-lock-screen" class="dropdown-item"><%=translation.Lock_Screen%></a>
+                                        <a href="pages-login-2" class="dropdown-item"><%=translation.Login_2%></a>
+                                        <a href="pages-register-2" class="dropdown-item"><%=translation.Register_2%></a>
+                                        <a href="pages-recoverpw-2" class="dropdown-item"><%=translation.Recover_Password_2%></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div>
+                                        <a href="pages-lock-screen-2" class="dropdown-item"><%=translation.Lock_Screen_2%></a>
+                                        <a href="pages-timeline" class="dropdown-item"><%=translation.Timeline%></a>
+                                        <a href="pages-invoice" class="dropdown-item"><%=translation.Invoice%></a>
+                                        <a href="pages-directory" class="dropdown-item"><%=translation.Directory%></a>
+                                        <a href="pages-blank" class="dropdown-item"><%=translation.Blank_Page%></a>
+                                        <a href="pages-404" class="dropdown-item"><%=translation.Error_404%></a>
+                                        <a href="pages-500" class="dropdown-item"><%=translation.Error_500%></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div>
+                                        <a href="pages-pricing" class="dropdown-item"><%=translation.Pricing%></a>
+                                        <a href="pages-gallery" class="dropdown-item"><%=translation.Gallery%></a>
+                                        <a href="pages-maintenance" class="dropdown-item"><%=translation.Maintenance%></a>
+                                        <a href="pages-coming-soon" class="dropdown-item"><%=translation.Coming_Soon%></a>
+                                        <a href="faq" class="dropdown-item"><%=translation.FAQ%></a>
+                                        <a href="contact" class="dropdown-item"><%=translation.Contact%></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-ecommerce" role="button"
+                            >
+                            <i class="mdi mdi-cart-outline me-2"></i><%=translation.Ecommerce%> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="topnav-ecommerce">
+                            
+                            <a href="ecommerce-product-list" class="dropdown-item"><%=translation.Product_List%></a>
+                            <a href="ecommerce-product-grid" class="dropdown-item"><%=translation.Product_Grid%></a>
+                            <a href="ecommerce-order-history" class="dropdown-item"><%=translation.Order_History%></a>
+                            <a href="ecommerce-customers" class="dropdown-item"><%=translation.Customers%></a>
+                            <a href="ecommerce-product-edit" class="dropdown-item"><%=translation.Product_Edit%></a>
+                        </div>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layout" role="button"
+                            >
+                            <i class="mdi mdi-movie-filter-outline me-2"></i><%=translation.Layouts%> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-layout">
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-layout-verti"
+                                    role="button" >
+                                    <%=translation.Vertical%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-layout-verti">
+                                    <a href="layouts-light-sidebar" class="dropdown-item"><%=translation.Light_Sidebar%></a>
+                                    <a href="layouts-compact-sidebar" class="dropdown-item"><%=translation.Compact_Sidebar%></a>
+                                    <a href="layouts-icon-sidebar" class="dropdown-item"><%=translation.Icon_Sidebar%></a>
+                                    <a href="layouts-boxed" class="dropdown-item"><%=translation.Boxed_Layout%></a>
+                                    <a href="layouts-colored-sidebar" class="dropdown-item"><%=translation.Colored_Sidebar%></a>
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-layout-hori"
+                                    role="button" >
+                                    <%=translation.Horizontal%> <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-layout-hori">
+                                    <a href="layouts-horizontal" class="dropdown-item"><%=translation.Horizontal%></a>
+                                    <a href="layouts-h-topbar-light" class="dropdown-item"><%=translation.Light_Topbar%></a>
+                                    <a href="layouts-h-boxed" class="dropdown-item"><%=translation.Boxed_Layout%></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>

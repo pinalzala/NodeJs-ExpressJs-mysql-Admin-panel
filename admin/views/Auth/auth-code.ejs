@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+    
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+        <meta content="Themesbrand" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/public/assets/images/favicon.ico">
+    
+        <%- include ('../Partials/HeaderStyle') %>
+    
+    </head>
+
+    <body>
+
+        <!-- Loader -->
+            <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+         <!-- Begin page -->
+         <div class="accountbg" style="background: url('public/assets/images/bg.jpg');background-size: cover;background-position: center;"></div>
+
+        <div class="account-pages mt-5 pt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center mt-4">
+                                    
+                                </div>
+                                <div class="p-3">
+                                    <% if(error.length> 0) { %>
+                                        <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                                            <%= error %>
+                                        </div>
+                                    <% } %>
+                                    <% if(message.length> 0) { %>
+                                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                                            <%= message %>
+                                        </div>
+                                    <% } %>
+    
+                                    <form class="form-horizontal" method="post" action="<%= base %>/post-code">
+
+                                        <div class="mb-3">
+                                            
+                                            <input type="number" class="form-control" id="code" placeholder="Enter Code" name="code">
+                                            <input type="hidden" value="<%=ses%>" name="ses" id="ses">
+                                        </div>
+
+                                        <div class="mb-3">
+                                           
+                                                <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Submit</button>
+                                           
+                                        </div>
+                                    </form>
+    
+                                </div>
+    
+                            </div>
+                        </div>
+                       
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include ('../Partials/VendorScript') %>
+
+        <script src="/public/assets/js/app.js"></script>
+
+    </body>
+</html>

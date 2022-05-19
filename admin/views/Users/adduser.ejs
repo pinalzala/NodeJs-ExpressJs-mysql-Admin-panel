@@ -1,0 +1,424 @@
+<%- contentFor('HeaderCss') %>
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+<style>
+    .cke_avtar img{width: 48px;}
+.smile a {
+margin-right: 8px;
+font-size: 16px;
+color: #bdc3c7;
+}
+a.close {
+color: #FFF8F8 !important;
+opacity: 1.6;
+margin-top: 8px;
+margin-left: 0px;
+position: absolute;
+border-radius: 23px;
+height: 18px;
+width: 19px;
+right: -9px;
+top: -9px;
+background: #CC0505;
+padding: 1px 0px 1px 6px;
+}
+.pull-left1.smile {
+background: #ffffff none repeat scroll 0 0;
+border: 1px solid;
+height: 266px;
+left: 31%;
+margin-top: 100px;
+overflow-x: hidden;
+padding: 7px 3px 0 12px;
+position: absolute;
+width: 36%;
+z-index: 100000000;
+}
+.cke_dialog_title1 {
+font-weight: bold;
+font-size: 13px;
+line-height: 31px;
+height: 32px;
+cursor: move;
+position: relative;
+color: #474747;
+text-shadow: 0 1px 0 rgba(255,255,255,.75);
+border-bottom: 1px solid #999;
+padding: 0px 19px;
+-moz-border-radius: 2px 2px 0 0;
+-webkit-border-radius: 2px 2px 0 0;
+border-radius: 2px 2px 0 0;
+-moz-box-shadow: 0 1px 0 #fff inset;
+-webkit-box-shadow: 0 1px 0 #fff inset;
+box-shadow: 0 1px 0 #fff inset;
+background: #cfd1cf;
+}
+#panel{ display:none;}
+.cke_smile12{    float: left;
+margin-right: 21px;}
+</style>
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+<style>
+	
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+/* .custom-file-input::before {
+  content: 'Change';
+  background: #6c757d;
+  padding: 5px 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+	margin: 10px 10px 0 0;
+    border-radius: 0.25rem;
+} */
+
+
+</style>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="alertmsg"></div>
+                    <form method="post" class="needs-validation" id="adduser" enctype="multipart/form-data" novalidate>
+
+                    <div class="row mb-3">
+                        <label for="validationCustom01"  class="col-sm-2 col-form-label">First Name <span style="color: red;">*</span> </label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  id="fname" name="fname" placeholder="First Name" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">Last Name <span style="color: red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  id="lname" name="lname" placeholder="Last Name" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">User Name <span style="color: red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  id="username" name="username" placeholder="User Name" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">User Email <span style="color: red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  id="email" name="email" placeholder="User Email" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">User Password <span style="color: red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="password"  id="password" name="password" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">Confirm Password <span style="color: red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="password" data-parsley-equalto="#password"  id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                    </div>
+  
+                  
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">Mobile No </label>
+                        <div class="col-sm-9">
+                            <input onkeydown="call(event,this.id)" class="form-control" type="text"  id="mobile" name="mobile" maxlength="15" onkeypress="return isNumberKey(event)" placeholder="Mobile Number">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">About Us </label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  id="about_us" name="about_us" placeholder="About Us....Optional">
+                        </div>
+                    </div>
+                 
+                    <div class="row mb-3">
+                        
+                        <label for="example-text-input" class="col-sm-2 col-form-label">Image </label>
+                        <div class="col-sm-9">
+                            <div id="dvPreview"></div>
+                            <input class="form-control" type="file" id="imageval">
+                            <input class="custom-file-input" type="file" id="changeImg"
+                                onclick="this.value=null;" hidden>
+                                
+                   
+                    </div>
+                  <!-- <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">Subscription </label>
+                        <div class="col-sm-9">
+                           
+                                <div class="">
+                                    <input type="checkbox" class="form-check-input me-2" name="subscribtion" id="subscribtion">
+                                    <label class="form-label" for="customCheck1">Email Subscription</label>
+                                </div>
+                                                 </div>
+                    </div>--> 
+                   
+                
+                    
+               
+             
+           
+                    
+                   
+                    <div class="row mb-3">
+                        <div>
+                            <button type="button" onclick="validate()" class="btn btn-primary waves-effect waves-light me-1">
+                                Submit
+                            </button>
+                            <a href="<%=base%>/users"><button type="button" href="<%=base%>/users" class="btn btn-secondary waves-effect">
+                                Back
+                            </button></a>
+                        </div>
+                    </div>
+                   </form>
+                    
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+		<script  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+		
+    
+<script>
+  $(document).ready(function(){
+$(".cke_smile12").click(function(){ 
+$("#panel").slideToggle(10);
+});
+$(".close").click(function(){
+$("#panel").hide(10);
+});
+$(".cke_avtar img").click(function(){
+var  smiley= $(this).attr("src"); // "static/images/banner/blue.jpg"
+var tarr = smiley.split('/');      // ["static","images","banner","blue.jpg"]
+var file = tarr[tarr.length-1]; // "blue.jpg"
+var data = file.split('.')[0];  // "blue"
+var hids=$("#hid_avtr").val();
+if(hids==0)       
+{
+$('#imageval').attr('src',smiley);
+}
+else
+{
+    
+    $('.pip').remove();
+		 $("<span class=\"pip\">" +
+            "<input type='hidden' id='image' name='image' value='"+file+"'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb mb-1\" src=\"<%=imagepath%>/user/" + file + "\" title=\"" + file.name + "\"/>" +
+            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span onclick='imageNull()' class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+            "</span>").insertAfter("#dvPreview");
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+            document.getElementById('imageval').style.display='inline-block';
+            document.getElementById('labelId').style.display='none';
+            document.getElementById('imageval').value= null;
+          });
+}
+$('.avtar').val(file);
+$("#hid_avtr").val(1);
+$("#panel").hide(10);
+});
+});
+	$( document ).ready(function() {
+                $( "#fname" ).keypress(function(e) {
+                    var key = e.keyCode;
+                    if (key >= 48 && key <= 57) {
+                        e.preventDefault();
+                    }
+                });
+
+            });
+						$( document ).ready(function() {
+                $( "#lname" ).keypress(function(e) {
+                    var key = e.keyCode;
+                    if (key >= 48 && key <= 57) {
+                        e.preventDefault();
+                    }
+                });
+            });
+	function call(e,id) {
+        if (document.getElementById(id).value.length == 0) {
+            if (e.keyCode == 32) {
+                e.preventDefault();
+            }
+        }
+}
+function isNumberKey(evt)
+{
+	var charCode = (evt.which) ? evt.which : event.keyCode
+	if (charCode > 31 && (charCode < 48 || charCode > 57))
+	return false;
+	return true;
+}
+
+$("#changeImg").on("change", function(e) {
+
+	var file = e.target.files[0];
+	 var reader = new FileReader();
+	 reader.onloadend = function(){
+		 //document.getElementById('user_img').src=reader.result;
+		 //document.getElementById('user_img').style.display='block';
+		 //document.getElementById('image').value=reader.result;
+         console.log(reader.result);
+		 $('.pip').remove();
+		 $("<span class=\"pip\">" +
+            "<input type='hidden' id='image_name' name='image_name' value='"+reader.result+"'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb mb-1\" src=\"" + reader.result + "\" title=\"" + file.name + "\"/>" +
+            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span onclick='imageNull()' class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+            "</span>").insertAfter("#dvPreview");
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+            document.getElementById('imageval').style.display='inline-block';
+            document.getElementById('labelId').style.display='none';
+            document.getElementById('imageval').value= null;
+          });
+	 }
+	 reader.readAsDataURL(file);
+});
+
+$("#imageval").on("change", function(e) {
+
+	document.getElementById('imageval').style.display='none';
+	document.getElementById('changeImg').style.display='inline-block';
+    // document.getElementById('labelId').style.display='block';
+    // document.getElementById('labelId').style.float='left';
+
+      var files = e.target.files[0];
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+					var resultdata = e.target.result;
+                    console.log(resultdata); 
+          $("<span class=\"pip\">" +
+            "<input type='hidden' id='image_name' name='image_name' value='"+resultdata+"'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb\" src=\"" + resultdata + "\" title=\"" + file.name + "\"/>" +
+            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span onclick='imageNull()' class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+            "</span>").insertAfter("#dvPreview");
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+            document.getElementById('imageval').style.display='inline-block';
+            document.getElementById('labelId').style.display='none';
+            document.getElementById('imageval').value= null;
+          });
+        });
+        fileReader.readAsDataURL(files);
+      //console.log(files);
+    });
+
+    function imageNull(){
+        document.getElementById('imageval').value= null;
+    }
+
+    
+function validate()
+{
+    var i = 0;
+    var j = 1;
+    var k = 0;
+   
+	var username=$('#username').val();
+	var email=$('#email').val();
+	var password=$('#password').val();
+    var password = $('#password').val();
+    var confPassword = $('#confirmPassword').val();
+
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+    if(emailReg.test(email)){
+        k = 1;
+    }
+
+
+    if(password == confPassword){
+      i = 1;  
+    }
+
+    if(!fname || !lname || !username || !email || !password )
+    {
+        j = 0;
+    }
+   
+    console.log(i,j);
+    console.log(fname);
+    console.log(lname);
+
+    if(i==1 && j==1 && k==1){
+        addUser();
+    }
+    else{
+        if(i==0){
+            $(window).scrollTop(0);
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>Password and Confirm Password does not Match. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'   
+        }
+        if(j==0){
+            $(window).scrollTop(0);
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>All Marked Fields Are Required. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'   
+        }
+        if(k==0){
+            $(window).scrollTop(0);
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>Enter Valid Email. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'   
+        }
+    }
+}
+
+ function addUser(){
+    var frm = $('#adduser').serialize();
+  
+   var data=frm; 
+    console.log(data);
+  $.ajax({
+    type: 'POST',
+    dataType : 'json',
+    url: '<%=urlapi%>adduser',
+    data: data,
+    
+    success: function (data) {
+        if(data.status == 'danger')
+        {
+            document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+        }
+        else{
+            document.getElementById('alertmsg').innerHTML='<div class="alert alert-'+data.status+' alert-dismissible fade show" role="alert"><strong>'+data.status+'!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+        }
+        $(window).scrollTop(0);
+    },
+    error: function(request, status, error) {
+        var string = request.responseJSON.message.split(",");
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+string[0]+'.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+  });
+
+  
+
+}
+
+
+
+</script>
+<script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+<%- contentFor('FooterJs') %>
+<script src="/public/assets/libs/select2/js/select2.min.js"></script>
+<script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+<script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="/public/assets/js/pages/form-advanced.init.js"></script>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+<script src="/public/assets/js/pages/form-validation.init.js"></script>
+<%- contentFor('BottomJs') %>

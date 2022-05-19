@@ -1,0 +1,261 @@
+<%- contentFor('HeaderCss') %>
+
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
+
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="alertmsg"></div>
+								
+
+                <a href="<%=base%>/addblogcategory"> <button style="float: right;" type="button" class="btn btn-primary waves-effect waves-light">Add New</button>
+                </a>
+								<div style="float: right;margin-right: 1%;" class="btn-group me-1">
+									<button type="button"  class="btn btn-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Action <i class="mdi mdi-chevron-down"></i></button>
+									<div class="dropdown-menu" data-popper-placement="bottom-start" style="margin: 0px; position: absolute; inset: 0px auto auto 0px; transform: translate(0px, 37px);">
+											<a class="dropdown-item" onclick="blogcategorystatuschange(1)" style="cursor:pointer;">Active</a>
+											<a class="dropdown-item" onclick="blogcategorystatuschange(2)" style="cursor:pointer;">Inactive</a>
+											<a class="dropdown-item" onclick="blogcategorystatuschange(3)" style="cursor:pointer;">Delete</a>
+											
+									</div>
+							</div>
+                <table id="datatable"  class="table table-striped dt-responsive nowrap table-vertical" 
+								style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+												<th style="padding-right: 0;"></th>
+												<th style="padding-right: 0;"><input type="checkbox" id="master"></th>
+                        <th>Category Name</th>
+                        <th>Status</th>
+                        <th style="width: 70px;">Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+										</tbody>
+								</table>
+
+            </div>
+        </div>
+				</div>
+				<div class="col-md-3 mt-4">
+					<div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel"> View Details                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                <tr>
+                                    <th style="width: 50%;">Category Name</th>
+                                    <td><span id="categoryname">Category Name</span></td>
+                                </tr>
+                                </thead>
+																<tbody>
+																	
+																</tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+				</div>
+			</div>
+			<%- contentFor('FooterJs') %>
+
+<script>
+
+
+	$( document ).ready(function() {
+    getblogcategorydata();
+});
+
+$('#master').on('click', function(e) {  
+         if($(this).is(':checked',true))    
+         {  
+            $(".sub_chk").prop('checked', true);    
+         } else {    
+            $(".sub_chk").prop('checked',false);    
+         }    
+        });
+
+function viewdata(categoryname)
+    {
+			document.getElementById('categoryname').innerHTML=categoryname;
+    }
+function getblogcategorydata(){
+var table;
+table = $('#datatable').DataTable();
+table.clear().draw();
+       $.ajax({
+type: 'GET',
+dataType : 'json',
+url: '<%=urlapi%>blogcategory',
+
+success: function (data) {
+for (var i = 0; i < data.length; i++) {
+if(data[i].status == 1)
+{
+    var status='<span class="badge bg-success">Active</span>'
+}
+else
+{
+    var status='<span class="badge bg-danger">Inactive</span>'
+}
+var action='<a style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#myModal" class="me-3 text-muted"><i class="mdi mdi-eye font-size-18"  onclick="viewdata(\'' + data[i].txt_catname + '\')" ></i></a><a href="<%=base%>/editblogcategory?id='+data[i].id+'&categoryname='+data[i].txt_catname+'" class="me-3 text-muted" style="cursor:pointer;"><i class="mdi mdi-pencil font-size-18"></i></a><a style="cursor:pointer;" onclick="deleteblogcategory('+data[i].id+')" class="text-muted"><i class="mdi mdi-close font-size-18"></i></a>'
+var checkbox='<input type="checkbox" class="sub_chk" data-id="'+data[i].id+'">'
+table.row.add(['',checkbox,data[i].txt_catname,status,action]);
+
+}
+table.draw();
+},
+error: function(request, status, error) {
+}
+});
+window.scrollTo(0, document.body.scrollHeight);    
+
+}
+
+function blogcategorystatuschange(statusid){
+if(statusid == 1)
+    {
+   var statusname="to Activate selected Blog Category";
+   var button = "Activate";
+   var status = "Blog Category status changed";
+    }
+    if(statusid == 2)
+    {
+        var statusname="to Inactivate selected Blog Category" ;
+        var button = "Inactivate";
+        var status = "Blog Category status changed";
+    }
+    if(statusid == 3)
+    {
+        var statusname="to Delete selected Blog Category";
+        var button = "Delete";
+        var status = "Blog Category deleted";
+    }
+
+		var allVals = [];    
+		$(".sub_chk:checked").each(function() {    
+				allVals.push($(this).attr('data-id'));  
+		});    
+
+		if(allVals.length <=0)    
+		{    
+				alert("Please select row.");    
+		} 
+		else
+		{
+   Swal.fire({
+           title: "Are you sure?",
+           text: statusname,
+           icon: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#4ac18e",
+           cancelButtonColor: "#f46a6a",
+           confirmButtonText: button
+         }).then(function (result) {
+           if (result.value) {
+            var join_selected_values = allVals.join(",");   
+               $.ajax({
+type: 'post',
+dataType : 'json',
+url: '<%=urlapi%>statuschangeblogcat',
+data: 'status='+statusid+'&id='+join_selected_values, 
+success: function (data) {
+
+	getblogcategorydata();   
+   var totalid=join_selected_values.split(",");
+   totalid.forEach(element => {
+    var delid=element.replace(/ /g, "").split(",")
+   // var table = $('#datatable-buttons').DataTable();
+  //  table.row(".delete_mem"+delid).remove().draw( false );
+   });
+  
+  document.getElementById('alertmsg').innerHTML='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong>  '+ status+' successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+},
+error: function(request, status, error) {
+   document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>  '+ status +' failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+}
+});
+           }
+       });
+    }
+}
+
+
+
+function deleteblogcategory(id){
+Swal.fire({
+           title: "Are you sure?",
+           text: "to Delete this Category",
+           icon: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#4ac18e",
+           cancelButtonColor: "#f46a6a",
+           confirmButtonText: "Delete"
+         }).then(function (result) {
+           if (result.value) {
+               $.ajax({
+type: 'delete',
+dataType : 'json',
+url: '<%=urlapi%>deleteblogcategory/'+id,
+
+success: function (data) {
+	getblogcategorydata();
+  document.getElementById('alertmsg').innerHTML='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> Delete category successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+},
+error: function(request, status, error) {
+   document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> Delete category failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+}
+});
+           }
+       });
+}
+
+
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- Required datatable js -->
+
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script> 
+
+<%- contentFor('BottomJs') %>

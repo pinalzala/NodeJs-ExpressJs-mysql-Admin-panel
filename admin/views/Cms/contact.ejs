@@ -1,0 +1,143 @@
+<%- contentFor('HeaderCss') %>
+
+<!-- DataTables -->
+<!-- DataTables -->
+<link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+
+<!-- Responsive datatable examples -->
+<link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
+
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+<style>
+    td
+    {
+        white-space: normal !important;
+
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="alertmsg"></div>
+                <a href="<%=base%>/addcontact"> <button style="float: right;" type="button" class="btn btn-primary waves-effect waves-light">Add New</button>
+                </a>
+               
+                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap table-vertical" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Worktime</th>
+                        <th>Address</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Option</th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <% if(contact.length){  
+                            for(var i = 0;i < contact.length;i++) {
+                                
+                                
+                                
+                                %>
+                                <tr class="delete_mem<%=contact[i].id%>">
+                                    <td></td>
+                          
+                            <td><%=contact[i].mobile%></td>
+                            <td><%=contact[i].email%></td>
+                            <td><%-contact[i].worktime%></td>
+                            <td><%-contact[i].address%></td>
+                            <td><%=contact[i].latitude%></td>
+                            <td><%=contact[i].longitude%></td>
+                            
+                            <td>
+
+                                <a href="<%=base%>/editcontact?id=<%=contact[i].id%>" class="me-3 text-muted"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                <a onclick="deletecontact('<%=contact[i].id%>')" class="text-muted"><i class="mdi mdi-close font-size-18"></i></a>
+                            
+                        
+                        </tr>
+                       
+                        <%  } }else{ %>
+                            <tr>  <td colspan="9">No record found</td>  </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+     
+    </div>
+</div>
+
+<%- contentFor('FooterJs') %>
+<script>
+    
+        function deletecontact(id){
+   
+   Swal.fire({
+           title: "Are you sure?",
+           text: "Contact delete",
+           icon: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#4ac18e",
+           cancelButtonColor: "#f46a6a",
+           confirmButtonText: "Yes, delete it!"
+         }).then(function (result) {
+           if (result.value) {
+               $.ajax({
+type: 'delete',
+dataType : 'json',
+url: '<%=urlapi%>deletecontact/'+id,
+
+success: function (data) {
+   var table = $('#datatable-buttons').DataTable();
+  table.row(".delete_mem" + id).remove().draw( false );
+  document.getElementById('alertmsg').innerHTML='<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> Delete Contact successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+},
+error: function(request, status, error) {
+   document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> Delete Contact failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+}
+});
+           }
+       });
+}
+
+        
+
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- Required datatable js -->
+
+<script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/public/assets/libs/jszip/jszip.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="/public/assets/js/pages/datatables.init.js"></script> 
+
+<%- contentFor('BottomJs') %>

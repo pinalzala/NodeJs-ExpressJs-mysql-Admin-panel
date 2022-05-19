@@ -1,0 +1,137 @@
+<%- contentFor('HeaderCss') %>
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+<style>
+    .imageThumb {
+  max-height: 75px;
+  border: 2px solid;
+  padding: 1px;
+  cursor: pointer;
+}
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+.remove {
+  display: block;
+  background: rgb(206, 17, 17);
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove:hover {
+  background: white;
+  color: black;
+}
+</style>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div id="alertmsg"></div>
+                <form method="post" class="needs-validation" id="addproduct" enctype="multipart/form-data" novalidate>
+                    <div class="row mb-3">
+                        <label for="example-text-input" class="col-sm-2 col-form-label">Category Name <span style="color: red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  id="blogcategoryname" name="txt_catname" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div>
+                            <button type="button" onclick="addblogcategory()" class="btn btn-primary waves-effect waves-light me-1">
+                                Submit
+                            </button>
+                            <a href="<%=base%>/manageblogcategory"><button type="button" class="btn btn-secondary waves-effect">
+                                Back
+                            </button></a>
+                        </div>
+                    </div>
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+		<script  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script>
+$( document ).ready(function() {
+                $( "#blogcategoryname" ).keypress(function(e) {
+                    var key = e.keyCode;
+                    if (key >= 48 && key <= 57) {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+
+	function addblogcategory(){	
+
+var txt_catname=$('#blogcategoryname').val();
+
+
+if(!txt_catname )
+{
+    $(window).scrollTop(0);
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>All Marked Fields Are Required.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    return false;
+}
+var frm = $('#addproduct').serialize();
+$.ajax({
+type: 'POST',
+dataType : 'json',
+url: '<%=urlapi%>addblogcategory',
+data: frm,
+
+success: function (data) {
+    if(data.status == 'danger')
+    {
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+    else{
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-'+data.status+' alert-dismissible fade show" role="alert"><strong>'+data.status+'!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+    $(window).scrollTop(0);
+},
+error: function(request, status, error) {
+    var string = request.responseJSON.message.split(",");
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+string[0]+'.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+}
+});
+}
+		</script>
+
+<script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    
+    <!-- Sweet alert init js-->
+    <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+   <!-- <script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
+<!-- Initialize the editor. -->
+<script>
+
+new FroalaEditor('#b_description',{key: "fIE3A-9C2E2E2B2A4B3E4ud1BI1IMNBUMRWAi1AYMSTRBUZYB-16D4E3D2F3C3H2C1B10D3B2=="});
+
+</script>
+<%- contentFor('FooterJs') %>
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<script src="/public/assets/libs/select2/js/select2.min.js"></script>
+<script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+<script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+<script src="/public/assets/js/pages/form-advanced.init.js"></script>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+<script src="/public/assets/js/pages/form-validation.init.js"></script>
+<%- contentFor('BottomJs') %>

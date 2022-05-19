@@ -1,0 +1,137 @@
+<%- contentFor('HeaderCss') %>
+    <link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">  
+    <%- contentFor('breadcrumb') %>
+
+        <%- contentFor('body') %>
+      
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alertmsg"></div>
+                            <form method="post" id="adminForm" novalidate>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">First Name</label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control validate" type="text" name="firstname"
+                                        value="<%= admin[0].firstname %>"    required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Last Name</label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control validate" type="text" name="lastname" value="<%= admin[0].lastname %>"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">User Name</label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control validate" type="text" name="username" value="<%= admin[0].username %>"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Email Address </label>
+                                    <div class="col-sm-6">
+                                        <input class="form-control validate" type="text" name="email" value="<%= admin[0].email %>"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div>
+                                        <button type="button" onclick="editAdmin()"
+                                            class="btn btn-primary waves-effect waves-light me-1">
+                                            Submit
+                                        </button>
+                                        <a href="<%=base%>/administrator"><button type="button" class="btn btn-secondary waves-effect">
+                                                Back
+                                            </button></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+           
+            <!-- <script type="text/javascript"
+                src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
+            <!-- Sweet alert init js-->
+            <script src="/public/assets/libs/jquery/jquery.min.js"></script>
+            
+            
+
+            <script>
+                $(document).ready(function () {
+                });
+
+                // function validate() {
+                //     var i = 0;
+                //     $(".validate").map(function () {
+                //         if (!($(this).val())) {
+                //             i++;
+                //         };
+                //     });
+                //     console.log(i);
+                //     if (i == 0) {
+                //         addProcess();
+                //     }
+                //     else {
+                //         $(window).scrollTop(0);
+                //         document.getElementById('alertmsg').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> All Marked Fields Are Required.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>`;
+                //     }
+                // }
+
+                function editAdmin() {
+                    var form = $('form#adminForm').serializeObject();
+                    console.log(form);
+                    $.ajax({
+                        url: '<%=urlapi%>updateadmindata/<%=id%>',
+                        method: 'put',
+                        data: form,
+                        success: function (data) {
+                            if (data.status == 'success') {
+                                document.getElementById('alertmsg').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> ${data.message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>`
+                            }
+                            else {
+                                document.getElementById('alertmsg').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> ${data.message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>`
+                            }
+                            $(window).scrollTop(0);
+                        },
+                        error: function (request, status, error) {
+                            var string = request.responseJSON.message.split(",");
+                            document.getElementById('alertmsg').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> ${string[0]} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                            $(window).scrollTop(0);
+                        }
+                    })
+                }
+
+       
+            </script>
+         
+            <%- contentFor('FooterJs') %>
+            <script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+            <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+                <script type="text/javascript"
+                    src="/public/assets/libs/jquery.serializeJSON/jquery.serialize-object.min.js"></script>
+                <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+                    rel="stylesheet" type="text/css" />
+                <script src="/public/assets/libs/select2/js/select2.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+                <script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+               
+                <script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+                <script
+                    src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+                <script src="/public/assets/js/pages/form-advanced.init.js"></script>
+                <script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+                <script src="/public/assets/js/pages/form-validation.init.js"></script>
+                <%- contentFor('BottomJs') %>

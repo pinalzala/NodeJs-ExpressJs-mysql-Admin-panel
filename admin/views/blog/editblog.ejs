@@ -1,0 +1,466 @@
+<%- contentFor('HeaderCss') %>
+    <link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <script src="//cdn.ckeditor.com/4.5.5/standard/ckeditor.js"></script>
+
+    <%- contentFor('breadcrumb') %>
+
+        <%- contentFor('body') %>
+            <style>
+                .imageThumb {
+                    max-height: 75px;
+                    border: 2px solid;
+                    padding: 1px;
+                    cursor: pointer;
+                }
+
+                .tpip, .pip {
+                    display: inline-block;
+                    margin: 10px 10px 0 0;
+                }
+            </style>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alertmsg"></div>
+                            <form method="post" class="needs-validation" id="addblog" enctype="multipart/form-data"
+                                novalidate>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Title <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="blogtitile" name="txt_blogtitle"
+                                            value="<%=blog.blog.txt_blogtitle%>" placeholder="Title" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Description <span
+                                            style="color: red;">*</span>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <textarea  class="ckeditor" name="txt_content"
+                                            id="b_description"><%=blog.blog.txt_content%></textarea>
+                                            
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Meta Keyword <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="meta_keyword" name="txt_blogkeyword"
+                                            value="<%=blog.blog.txt_blogkeyword%>" placeholder="Meta Keyword" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Meta Description
+                                        <span style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="meta_description"
+                                            name="meta_description" value="<%=blog.blog.meta_description%>"
+                                            placeholder="Meta Keyword" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Category Name <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-3">
+                                        <select class="form-select" aria-label="Default select example" id="categoryId"
+                                            name="cat_id" required>
+                                            <option value="">Select Category</option>
+                                            <% if(categorydata.length){ for(var i=0;i < categorydata.length;i++) { %>
+                                                <option value="<%=categorydata[i].id%>">
+                                                    <%=categorydata[i].txt_catname%>
+                                                </option>
+                                                <% } } %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Select User <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-3">
+                                        <select class="form-select select2" aria-label="Default select example"
+                                            id="username" name="blog_userid" required>
+                                            <option value="">Select User</option>
+                                            <% if(userdata.length){ for(var i=0;i < userdata.length;i++) { %>
+                                                <option value="<%=userdata[i].id%>">
+                                                    <%=userdata[i].fname%>
+                                                        <%=userdata[i].lname%>
+                                                </option>
+                                                <% } } %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Columns</label>
+                                    <div class="col-sm-3">
+                                        <select class="form-select" aria-label="Default select example" id="columns"
+                                            name="columns" required>
+                                            <option value="">Select Column</option>
+                                            <% for (var i=1; i<=12; i++ ) { %>
+
+                                                <option value="<%=i%>">
+                                                    <%=i%>
+                                                </option>
+                                                <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Video/Image </label>
+                                    <div class="col-sm-9">
+                                        <div class="">
+                                            <input type="radio" class="form-check-input me-2" name="txt_mediatype"
+                                                id="txt_mediatype" value="1" <% if(blog.blog.txt_mediatype=="1"
+                                                ){%>checked <% } %>>Image
+
+                                                <input type="radio" class="form-check-input ms-2 me-2"
+                                                    name="txt_mediatype" id="txt_mediatype" value="2" <%
+                                                    if(blog.blog.txt_mediatype=="2" ){%>checked <% } %>>Video
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Video URL</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="videourl" name="txt_mediautub"
+                                            value="<%=blog.blog.txt_mediautub%>" placeholder="Video URL" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Source </label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="source" name="sources"
+                                            value="<%=blog.blog.sources%>" placeholder="Source" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Image
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <div id="dvPreview"></div>
+                                        <input class="form-control" type="file" id="imageval">
+                                        <input class="custom-file-input" type="file" id="changeImg"
+                                            onclick="this.value=null;" hidden>
+                                        <span style="display:block;" class="mt-1">Note : Please upload 862*574 size image</span>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Thumb Image
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <div id="tdvPreview"></div>
+                                        <input class="form-control" type="file" id="timageval">
+                                        <input class="custom-file-input" type="file" id="tchangeImg"
+                                            onclick="this.value=null;" hidden>
+                                            <span style="display:block;" class="mt-1">Note : Please upload 410*465 size image</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Add Tags<span
+                                            style="color: red;">*</span>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input id="key" type="button" class="btn btn-success" value="Add Tags"
+                                            name="tags[]" />
+                                        <div id="TextBoxkey" style="margin-top: 1%;">
+                                            <% if(blog.tag.length){ for(var i=0;i < blog.tag.length;i++) { %>
+                                                <div>
+                                                    <input name="tags[]" style="margin-top: 1%;width:80%;float:left"
+                                                        id="blog_tag" class="form-control" required type="text"
+                                                        value="<%=blog.tag[i].tags%>" />
+                                                    <input type="button" value="Remove"
+                                                        style="margin-top: 1%;margin-left: 1%;float:left"
+                                                        class="remove btn btn-danger" />
+                                                </div>
+                                                <% } } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div>
+                                        <button type="button" onclick="editblog()"
+                                            class="btn btn-primary waves-effect waves-light me-1">
+                                            Submit
+                                        </button>
+                                        <a href="<%=base%>/blog"><button type="button"
+                                                class="btn btn-secondary waves-effect">
+                                                Back
+                                            </button></a>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    $('#username').val('<%=blog.blog.blog_userid%>');
+                    $('#columns').val('<%=blog.blog.columns%>');
+                    $('#categoryId').val('<%=blog.blog.cat_id%>');
+                    // $('#rel_porducts').select2().select2().val(relporductsdata);
+                    $('#username').select2().val('<%=blog.blog.blog_userid%>');
+                    $('#columns').select2().val('<%=blog.blog.columns%>');
+                    $('#categoryId').select2().val('<%=blog.blog.cat_id%>');
+                    getImage();
+                    tgetImage();
+                });
+                $(function () {
+                    $("#key").bind("click", function () {
+                        var div = $("<div />");
+                        div.html(GenerateTextkeybox(""));
+                        $("#TextBoxkey").append(div);
+                    });
+
+                    $("body").on("click", ".remove", function () {
+                        $(this).closest("div").remove();
+                    });
+                });
+                function GenerateTextkeybox(value) {
+                    return '<input name = "tags[]" id="blog_tag" style="margin-top: 1%;width:80%;float:left" class="form-control" required type="text" value = "' + value + '" /> ' +
+                        '<input type="button" value="Remove" style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'
+                }
+
+                function editblog() {
+                    //alert('hii');
+                    var txt_blogtitle = $('#blogtitile').val();
+                    var txt_content = $('#b_description').val();
+                    var txt_blogkeyword = $('#meta_keyword').val();
+                    var meta_description = $('#meta_description').val();
+                    var cat_id = $('#categoryId').val();
+                    var blog_userid = $('#username').val();
+                    var blog_tag = $('#blog_tag').val();
+                    if ($('#blog_tag').val() == undefined) {
+                        blog_tag = 0;
+                    }
+                    for (instance in CKEDITOR.instances) {
+        CKEDITOR.instances[instance].updateElement();
+    }
+                    if (!txt_blogtitle || !txt_blogkeyword || !meta_description || !cat_id || !blog_userid || !blog_tag) {
+                        $(window).scrollTop(0);
+                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>All Marked Fields Are Required.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                        return false;
+                    }
+                    var frm = $('#addblog').serialize();
+                    $.ajax({
+                        type: 'PUT',
+                        dataType: 'json',
+                        url: '<%=urlapi%>updateblogadmin/<%=id%>',
+                        data: frm,
+
+                        success: function (data) {
+
+                            if (data.status == 'danger') {
+                                console.log('success');
+                                document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> ' + data.message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                            }
+                            else {
+                                document.getElementById('alertmsg').innerHTML = '<div class="alert alert-' + data.status + ' alert-dismissible fade show" role="alert"><strong>' + data.status + '!</strong> ' + data.message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                            }
+                            $(window).scrollTop(0);
+
+
+                        },
+                        error: function (request, status, error) {
+                            console.log('url', url);
+                            var string = request.responseJSON.message.split(",");
+                            document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> ' + string[0] + '.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                        }
+                    });
+                }
+
+                $("#changeImg").on("change", function (e) {
+
+                    var file = e.target.files[0];
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        //document.getElementById('user_img').src=reader.result;
+                        //document.getElementById('user_img').style.display='block';
+                        //document.getElementById('image').value=reader.result;
+                        console.log(reader.result);
+                        $('.pip').remove();
+                        $("<span class=\"pip\">" +
+                            "<input type='hidden' id='image_name' name='image_name' value='" + reader.result + "'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb mb-1\" src=\"" + reader.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+                            "</span>").insertAfter("#dvPreview");
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                            document.getElementById('imageval').style.display = 'inline-block';
+                            // document.getElementById('labelId').style.display = 'none';
+                            document.getElementById('imageval').value = null;
+                            getImage();
+                        });
+                    }
+                    reader.readAsDataURL(file);
+                });
+
+                $("#imageval").on("change", function (e) {
+
+                    document.getElementById('imageval').style.display = 'none';
+                    document.getElementById('changeImg').style.display = 'inline-block';
+
+                    var files = e.target.files[0];
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function (e) {
+                        var file = e.target;
+                        var resultdata = e.target.result;
+                        console.log(resultdata);
+                        $("<span class=\"pip\">" +
+                            "<input type='hidden' id='image_name' name='image_name' value='" + resultdata + "'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb\" src=\"" + resultdata + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+                            "</span>").insertAfter("#dvPreview");
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                            document.getElementById('imageval').style.display = 'inline-block';
+
+                            document.getElementById('imageval').value = null;
+                            getImage();
+                        });
+                    });
+                    fileReader.readAsDataURL(files);
+                    //console.log(files);
+                });
+                function getImage() {
+                    if ('<%=blog.blog.txt_mediaurl%>' != '') {
+                        document.getElementById('imageval').style.display = 'none';
+                        document.getElementById('changeImg').style.display = 'inline-block';
+
+                        var image = '<%=imagepath%>user/<%=blog.blog.txt_mediaurl%>';
+                        var imageName = '<%=blog.blog.txt_mediaurl%>'
+                        $("<span class=\"pip\">" +
+                            "<img id='user_img' height='100px;' width= '100px' class=\"imageThumb\" src=\"" + image + "\" title=\"" + imageName + "\"/>" +
+                            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label>" +
+                            "</span>").insertAfter("#dvPreview");
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                            document.getElementById('imageval').style.display = 'inline-block';
+                            document.getElementById('imageval').value = null;
+                        });
+                    }
+                    // fileReader1.readAsDataURL(files);
+                    //console.log(files);
+                }
+
+                $("#tchangeImg").on("change", function (e) {
+
+                    var file = e.target.files[0];
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        //document.getElementById('user_img').src=reader.result;
+                        //document.getElementById('user_img').style.display='block';
+                        //document.getElementById('image').value=reader.result;
+                        console.log(reader.result);
+                        $('.tpip').remove();
+                        $("<span class=\"tpip\">" +
+                            "<input type='hidden' id='thumbimage_name' name='thumbimage_name' value='" + reader.result + "'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb mb-1\" src=\"" + reader.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><br/><label for='tchangeImg' id='tlabelId' class='btn btn-secondary me-2' >Change</label><span class=\"tremove btn btn-secondary\" id=\"rem\">Remove</span>" +
+                            "</span>").insertAfter("#tdvPreview");
+                        $(".tremove").click(function () {
+                            $(this).parent(".tpip").remove();
+                            document.getElementById('timageval').style.display = 'inline-block';
+                            // document.getElementById('labelId').style.display = 'none';
+                            document.getElementById('timageval').value = null;
+                            tgetImage();
+                        });
+                    }
+                    reader.readAsDataURL(file);
+                });
+
+                $("#timageval").on("change", function (e) {
+
+                    document.getElementById('timageval').style.display = 'none';
+                    document.getElementById('tchangeImg').style.display = 'inline-block';
+
+                    var files = e.target.files[0];
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function (e) {
+                        var file = e.target;
+                        var resultdata = e.target.result;
+                        console.log(resultdata);
+                        $("<span class=\"tpip\">" +
+                            "<input type='hidden' id='thumbimage_name' name='thumbimage_name' value='" + resultdata + "'><img id='user_img' height='100px;' width= '100px' class=\"imageThumb\" src=\"" + resultdata + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><br/><label for='tchangeImg' id='tlabelId' class='btn btn-secondary me-2' >Change</label><span class=\"tremove btn btn-secondary\" id=\"rem\">Remove</span>" +
+                            "</span>").insertAfter("#tdvPreview");
+                        $(".tremove").click(function () {
+                            $(this).parent(".tpip").remove();
+                            document.getElementById('timageval').style.display = 'inline-block';
+
+                            document.getElementById('timageval').value = null;
+                            tgetImage();
+                        });
+                    });
+                    fileReader.readAsDataURL(files);
+                    //console.log(files);
+                });
+                function tgetImage() {
+                    if ('<%=blog.blog.thumbimage_name%>' != '') {
+                        document.getElementById('timageval').style.display = 'none';
+                        document.getElementById('tchangeImg').style.display = 'inline-block';
+
+                        var image = '<%=imagepath%>user/thumb/<%=blog.blog.thumbimage_name%>';
+                        var imageName = '<%=blog.blog.thumbimage_name%>'
+                        $("<span class=\"tpip\">" +
+                            "<img id='user_img' height='100px;' width= '100px' class=\"imageThumb\" src=\"" + image + "\" title=\"" + imageName + "\"/>" +
+                            "<br/><br/><label for='tchangeImg' id='tlabelId' class='btn btn-secondary me-2' >Change</label>" +
+                            "</span>").insertAfter("#tdvPreview");
+                        $(".tremove").click(function () {
+                            $(this).parent(".tpip").remove();
+                            document.getElementById('timageval').style.display = 'inline-block';
+                            document.getElementById('timageval').value = null;
+                        });
+                    }
+                    // fileReader1.readAsDataURL(files);
+                    //console.log(files);
+                }
+            </script>
+            <script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+            <!-- Sweet alert init js-->
+            <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+            <!-- <script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+           
+
+            <!-- Initialize the editor. -->
+            <script>
+               
+                   
+            
+        </script> 
+            <%- contentFor('FooterJs') %>
+                
+                <script src="/public/assets/libs/select2/js/select2.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+                <script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+                <script
+                    src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+                <script src="/public/assets/js/pages/form-advanced.init.js"></script>
+                <script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+                <script src="/public/assets/js/pages/form-validation.init.js"></script>
+                <%- contentFor('BottomJs') %>

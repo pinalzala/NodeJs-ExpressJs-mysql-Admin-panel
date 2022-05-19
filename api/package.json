@@ -1,0 +1,72 @@
+{
+  "name": "pmcerty",
+  "version": "1.0.0",
+  "description": "pmcerty",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cornflourblue/node-mysql-signup-verification-api.git"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "start:dev": "nodemon ./server.js"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bcryptjs": "^2.4.3",
+    "blob-to-base64": "^1.0.2",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "express-formidable": "^1.2.0",
+    "express-jwt": "^6.0.0",
+    "fast-csv": "^4.3.6",
+    "file-get-contents": "^1.0.0",
+    "formidable": "^1.2.2",
+    "fs": "0.0.1-security",
+    "html-pdf": "^3.0.1",
+    "http": "0.0.1-security",
+    "joi": "^17.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "mime": "^2.5.2",
+    "minipass": "2.7.0",
+    "moment": "^2.29.1",
+    "multer": "^1.4.4",
+    "multiparty": "^4.2.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "node-serialize": "^0.0.4",
+    "nodemailer": "^6.4.11",
+    "php-serialize": "^4.0.2",
+    "php-unserialize": "^0.0.1",
+    "phpdate-js": "^1.0.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "rootpath": "^0.1.2",
+    "sequelize": "^6.3.4",
+    "sequelize-auto-migrations": "^1.0.3",
+    "sha1": "^1.1.1",
+    "sharp": "^0.29.3",
+    "socket.io": "4.1.2",
+    "socket.io-client": "^2.3.0",
+    "stripe": "^8.202.0",
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "8.3.2",
+    "xml2js": "^0.4.23",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "bugs": {
+    "url": "https://github.com/cornflourblue/node-mysql-signup-verification-api/issues"
+  },
+  "homepage": "https://github.com/cornflourblue/node-mysql-signup-verification-api#readme",
+  "main": "server.js",
+  "keywords": [],
+  "author": ""
+}

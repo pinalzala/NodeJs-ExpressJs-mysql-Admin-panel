@@ -1,0 +1,169 @@
+<%- contentFor('HeaderCss') %>
+<link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.ckeditor.com/4.5.5/standard/ckeditor.js"></script>
+
+
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="alertmsg"></div>
+                    <form method="post" class="needs-validation" id="editcontact" enctype="multipart/form-data" novalidate>
+
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Text Desc </label>
+                                <div class="col-sm-9">
+                                    <textarea  class="ckeditor" name="text_desc" id="text_desc"><%=responsetest.text_desc%></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Mobile <span style="color: red;">*</span></label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text"  id="mobile" value="<%=responsetest.mobile%>" name="mobile" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Email <span style="color: red;">*</span></label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email"  id="email" value="<%=responsetest.email%>" name="email" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Address <span style="color: red;">*</span></label>
+                                <div class="col-sm-9">
+                                      <textarea name="address" id="address" class="form-control desc"><%=responsetest.address%></textarea>
+                                      
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Worktime <span style="color: red;">*</span></label>
+                                <div class="col-sm-9">
+                                    <textarea name="worktime"  class="ckeditor" id="worktime"><%=responsetest.worktime%></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Latitude <span style="color: red;">*</span></label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="number" value="<%=responsetest.latitude%>"  id="latitude" name="latitude" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Longitude <span style="color: red;">*</span></label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="number" value="<%=responsetest.longitude%>"  id="longitude" name="longitude" required>
+                                </div>
+                            </div>
+                          
+                       
+                   
+                    <div class="row mb-3">
+                        <div>
+                            <button type="button" onclick="editcontact()" class="btn btn-primary waves-effect waves-light me-1">
+                                Submit
+                            </button>
+                            <a href="<%=base%>/contact"><button type="button" href="<%=base%>/contact" class="btn btn-secondary waves-effect">
+                                Back
+                            </button></a>
+                        </div>
+                    </div>
+                   </form>
+                    
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+    <script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+		<script  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+    <!-- Sweet alert init js-->
+    <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+
+<script>
+$( document ).ready(function() {
+		$( "#mobile" ).keypress(function(e) {
+				var key = e.keyCode;
+				if (key > 31 && (key < 48 || key > 57)) {
+						e.preventDefault();
+				}
+		});
+});  
+
+function editcontact(){
+	var text_desc=$('#text_desc').val();
+	var mobile=$('#mobile').val();
+	var email=$('#email').val();
+	var address=$('#address').val();
+	var worktime=$('#worktime').val();
+	var latitude=$('#latitude').val();
+	var longitude=$('#longitude').val();
+
+	var emailpattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+			
+    for (instance in CKEDITOR.instances) {
+        CKEDITOR.instances[instance].updateElement();
+    }
+
+	if(!mobile ||  !email ||  !latitude ||  !longitude)
+	{
+			$(window).scrollTop(0);
+			document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>All Marked Fields Are Required.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+			return false;
+	}
+	else if(!emailpattern.test(email)){
+		$(window).scrollTop(0);
+			document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>Plesse enter valid email.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+			return false;
+	}
+
+
+    var frm = $('#editcontact').serialize();
+  
+   var data=frm; 
+
+  $.ajax({
+    type: 'PUT',
+    dataType : 'json',
+    url: '<%=urlapi%>editcontact/<%=id%>',
+    data: data,
+    
+    success: function (data) {
+        if(data.status == 'danger')
+        {
+            document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+        }
+        else{
+            document.getElementById('alertmsg').innerHTML='<div class="alert alert-'+data.status+' alert-dismissible fade show" role="alert"><strong>'+data.status+'!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+        }
+    },
+    error: function(request, status, error) {
+        var string = request.responseJSON.message.split(",");
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+string[0]+'.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+  });
+}
+
+</script>
+<script>
+</script>
+<%- contentFor('FooterJs') %>
+
+<script src="/public/assets/libs/select2/js/select2.min.js"></script>
+<script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+<script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+<script src="/public/assets/js/pages/form-advanced.init.js"></script>
+<script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+<script src="/public/assets/js/pages/form-validation.init.js"></script>
+<%- contentFor('BottomJs') %>

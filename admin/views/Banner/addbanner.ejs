@@ -1,0 +1,192 @@
+<%- contentFor('HeaderCss') %>
+    <link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="/public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+
+    <%- contentFor('breadcrumb') %>
+
+        <%- contentFor('body') %>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alertmsg"></div>
+                            <form method="post" class="needs-validation" id="addbanner" enctype="multipart/form-data"
+                                novalidate>
+
+                               
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Banner Image <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        <div id="dvPreview"></div>
+													<input class="form-control" type="file" id="imageval" onclick="this.value=null;">
+													<input class="custom-file-input" type="file" id="changeImg" onclick="this.value=null;" hidden>
+
+                                     <span style="display:block;" class="mt-1">Note : Please upload minimum 982*816 size image</span>
+
+                                    </div>
+
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Banner Caption <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="banner_caption"
+                                            name="banner_caption" placeholder="Banner Caption">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">URL <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="url" id="banner_url" name="banner_url"
+                                            placeholder="Banner URL">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Reference <span
+                                            style="color: red;">*</span></label></label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="text" id="reference" name="reference"
+                                            placeholder="Reference">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div>
+                                        <button type="button" onclick="addbanner()"
+                                            class="btn btn-primary waves-effect waves-light me-1">
+                                            Submit
+                                        </button>
+                                        <a href="<%=base%>/banner"><button type="button" href="<%=base%>/banner"
+                                                class="btn btn-secondary waves-effect">
+                                                Back
+                                            </button></a>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+            <script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+            <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+            <!-- Sweet alert init js-->
+            <script src="/public/assets/js/pages/sweet-alerts.init.js"></script>
+            <script>
+
+
+                function addbanner() {
+                    //var title=$('#title').val();
+                    //var countryID=$('#countryId').val();
+                    var image = $('#banner_image').val();
+                    var banner_caption = $('#banner_caption').val();
+                    var banner_url = $('#banner_url').val();
+                    var reference = $('#reference').val();
+
+
+                    if (!image || !banner_caption || !banner_url || !reference) {
+                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>All Marked Fields Are Required.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                        return false;
+                    }
+                    var frm = $('#addbanner').serialize();
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '<%=urlapi%>addbanner',
+                        data: frm,
+
+                        success: function (data) {
+                            if (data.status == 'danger') {
+                                document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> ' + data.message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                            }
+                            else {
+                                document.getElementById('alertmsg').innerHTML = '<div class="alert alert-' + data.status + ' alert-dismissible fade show" role="alert"><strong>' + data.status + '!</strong> ' + data.message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                            }
+                        },
+                        error: function (request, status, error) {
+                            var string = request.responseJSON.message.split(",");
+                            document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> ' + string[0] + '.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                        }
+                    });
+
+                }
+                $("#changeImg").on("change", function (e) {
+
+                    var file = e.target.files[0];
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        //document.getElementById('user_img').src=reader.result;
+                        //document.getElementById('user_img').style.display='block';
+                        //document.getElementById('image').value=reader.result;
+                        console.log(reader.result);
+                        $('.pip').remove();
+                        $("<span class=\"pip\">" +
+                            "<input type='hidden' id='banner_image' name='banner_image' value='" + reader.result + "'><img id='user_img' height='100px;' width= '150px' class=\"imageThumb mb-1\" src=\"" + reader.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span onclick='imageNull()' class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+                            "</span>").insertAfter("#dvPreview");
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                            document.getElementById('imageval').style.display = 'inline-block';
+                            document.getElementById('labelId').style.display = 'none';
+                            document.getElementById('imageval').value = null;
+                        });
+                    }
+                    reader.readAsDataURL(file);
+                });
+
+                $("#imageval").on("change", function (e) {
+
+                    document.getElementById('imageval').style.display = 'none';
+                    document.getElementById('changeImg').style.display = 'inline-block';
+                    // document.getElementById('labelId').style.display='block';
+                    // document.getElementById('labelId').style.float='left';
+
+                    var files = e.target.files[0];
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function (e) {
+                        var file = e.target;
+                        var resultdata = e.target.result;
+                        console.log(resultdata);
+                        $("<span class=\"pip\">" +
+                            "<input type='hidden' id='banner_image' name='banner_image' value='" + resultdata + "'><img id='user_img' height='100px;' width= '150px' class=\"imageThumb\" src=\"" + resultdata + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><br/><label for='changeImg' id='labelId' class='btn btn-secondary me-2' >Change</label><span onclick='imageNull()' class=\"remove btn btn-secondary\" id=\"rem\">Remove</span>" +
+                            "</span>").insertAfter("#dvPreview");
+                        $(".remove").click(function () {
+                            $(this).parent(".pip").remove();
+                            document.getElementById('imageval').style.display = 'inline-block';
+                            document.getElementById('labelId').style.display = 'none';
+                            document.getElementById('imageval').value = null;
+                        });
+                    });
+                    fileReader.readAsDataURL(files);
+                    //console.log(files);
+                });
+
+                function imageNull() {
+                    document.getElementById('imageval').value = null;
+                }  
+            </script>
+
+            <%- contentFor('FooterJs') %>
+                <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+                    rel="stylesheet" type="text/css" />
+                <script src="/public/assets/libs/select2/js/select2.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+                <script src="/public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+                <script
+                    src="/public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+                <script src="/public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+                <script src="/public/assets/js/pages/form-advanced.init.js"></script>
+                <script src="/public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+                <script src="/public/assets/js/pages/form-validation.init.js"></script>
+                <%- contentFor('BottomJs') %>

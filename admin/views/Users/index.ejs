@@ -1,0 +1,527 @@
+<%- contentFor('HeaderCss') %>
+
+
+    <!-- DataTables -->
+    <link href="/public/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        type="text/css">
+    <link href="/public/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+        type="text/css">
+
+    <!-- Responsive datatable examples -->
+    <link href="/public/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css">
+    <link href="/public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <%- contentFor('breadcrumb') %>
+
+        <%- contentFor('body') %>
+
+
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div id="alertmsg"></div>
+                           <!---- <button style="float: left;margin-left: 1%;" type="button"
+                                class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal"
+                                data-bs-target="#myModalexport">Import User</button>-->
+
+                            <a href="<%=base%>/adduser"> <button style="float: right;" type="button"
+                                    class="btn btn-primary waves-effect waves-light">Add New</button>
+                            </a>
+                            <div style="float: right;margin-right: 1%;" class="btn-group">
+                                <button type="button" class="btn btn-primary"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Action <i
+                                        class="mdi mdi-chevron-down"></i></button>
+                                <div class="dropdown-menu" data-popper-placement="bottom-start"
+                                    style="margin: 0px; position: absolute; inset: 0px auto auto 0px; transform: translate(0px, 37px);">
+                                    <a class="dropdown-item" onclick="multiapprove()" style="cursor:pointer;">Approve</a>
+                                    <a class="dropdown-item" onclick="multireject()" style="cursor:pointer;">Rejecte</a>
+                                    <a class="dropdown-item" onclick="multidelete()" style="cursor:pointer;">Delete</a>
+                                </div>
+                            </div>
+
+                            <table id="datatable-buttons"
+                                class="table table-striped dt-responsive nowrap table-vertical"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+
+                                    <tr>
+                                        <th></th>
+                                        <th><input type="checkbox" id="master"></th>
+                                        <th> First Name</th>
+                                        <th> Last Name</th>
+                                       <th> Email</th>
+                                        <th> Profile Image</th>
+                                        <th>Status</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3 mt-4">
+                    <!-- sample modal content -->
+                    <div id="myModalexport" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0" id="myModalLabel"> Import User </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  
+                                         
+                                        <form action="<%=base%>/importuser" enctype="multipart/form-data" method="post">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row mb-3">
+                                                        <div class="col-4">Upload Csv File </div>
+                                                        
+                                                        <div class="col-4">
+                                                            <div id="fileName"></div>
+                                                            <input type="file" id="importFile" class="form-control-file"
+                                                                required name="file" onchange="getFile()" hidden>
+                                                            <label for="importFile" class="btn btn-secondary">Select
+                                                                .csv
+                                                                File</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-4">Example
+                                                            </div>
+                                                        <div class="col-4">
+                                                            <a href="/public/assets/csvuser.csv" download>
+                                                                <button  type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#myModalexport" class="btn btn-primary waves-effect waves-light">Download</button> </a>
+                                                            
+                                                        </div>
+    
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-4">
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <input type="submit" value="Import"
+                                                                    class="btn btn-success">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </form>
+                                    
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0" id="myModalLabel"> View Details </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50%;">First Name</th>
+                                                    <td><span id="firstname">First Name</span></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th style="width: 50%;">Last Name</th>
+                                                    <td><span id="lastname">First Name</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 50%;">User Name</th>
+                                                    <td><span id="username">First Name</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 50%;">Email</th>
+                                                    <td><span id="email">First Name</span></td>
+                                                </tr>
+                                               
+                                                <tr>
+                                                    <th style="width: 50%;">Phone no</th>
+                                                    <td><span id="mobile">First Name</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 50%;">Profile Image</th>
+                                                    <td><span id="image">First Name</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+           
+                </div>
+            </div>
+
+            <script>
+                  
+                $(document).ready(function () {
+                  
+                    getuserdata();
+                });
+
+                function getFile(){
+                    var file = $('#importFile')[0].files[0].name;
+                    $('#fileName').text(file);
+                }
+                
+                function getuserdata() {
+                    //alert('hii');
+
+                    // var table;
+                    // table = $('#datatable').DataTable();
+                   
+                     table = $('#datatable-buttons').DataTable({
+                        lengthChange: false,
+                        bInfo: true,
+                        buttons: [
+                            { extend: 'excel', text: 'Export User' },
+                            // { extend: 'print', text: 'Print' }
+
+
+
+                        ]
+
+                    });
+
+                    table.buttons().container()
+                        .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+                    $(".dataTables_length select").addClass('form-select form-select-sm');
+
+                    table.clear().draw();
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        url: '<%=urlapi%>getAllusers',
+
+                        success: function (data) {
+                            for (var i = data.length - 1; i >= 0; i--) {
+                                if (data[i].status == 1) {
+                                    var status = '<span class="badge bg-success">Approved</span>'
+                                }
+                                else {
+                                    var status = '<span class="badge bg-danger">Rejected</span>'
+                                }
+                                if (data[i].image == '') {
+                                    if (data[i].fb_profile_image != '') {
+                                        var image = '<img height="70px" width="70px" src="' + data[i].fb_profile_image + '"/>';
+                                        var imagedata = data[i].fb_profile_image;
+                                    }
+                                    else if (data[i].twitter_profile_image != '') {
+                                        var image = '<img height="70px" width="70px" src="' + data[i].twitter_profile_image + '"/>';
+                                        var imagedata = data[i].twitter_profile_image;
+                                    }
+                                    else {
+                                         	var image='<img height="70px" width="70px" src="<%=imagepath%>user/thumb/Avatars-80_2.png"/>'
+                                         var imagedata='<%=imagepath%>user/thumb/Avatars-80_2.png'
+                                        
+                                    }
+                                }
+                                else {
+                                    var image = '<img height="70px" width="70px" src="<%=imagepath%>user/thumb/' + data[i].image + '"/>';
+                                    var imagedata = '<%=imagepath%>user/thumb/' + data[i].image;
+                                }
+                                if(!data[i].image)
+                                {
+                                var image='<img height="70px" width="70px" src="<%=imagepath%>user/thumb/Avatars-80_2.png"/>'
+                                         var imagedata='<%=imagepath%>user/thumb/Avatars-80_2.png'
+                                }
+                                var action = '<a style="cursor:pointer;" onclick="viewdata(\'' + data[i].fname + '\',\'' + data[i].lname + '\',\'' + data[i].username + '\',\'' + data[i].email + '\',\'' + data[i].mobile + '\',\'' + imagedata + '\')"  data-bs-toggle="modal" data-bs-target="#myModal" class="me-3 text-muted"><i class="mdi mdi-eye font-size-18"></i></a><a style="cursor:pointer;" href="<%=base%>/updateuser?id=' + data[i].id + '" class="me-3 text-muted"><i class="mdi mdi-pencil font-size-18"></i></a><a style="cursor:pointer;" onclick="deleteuser(' + data[i].id + ')" class="text-muted"><i class="mdi mdi-close font-size-18"></i></a>'
+                                var checkbox = '<input type="checkbox" class="sub_chk" data-id="' + data[i].id + '">'
+                                table.row.add(['', checkbox, data[i].fname, data[i].lname, data[i].email, image,  status, action]);
+
+                            }
+                            table.draw();
+                            
+                        },
+                        error: function (request, status, error) {
+                        }
+                    });
+                    window.scrollTo(0, document.body.scrollHeight);
+
+                }
+                function viewdata(fname, lname, username, email, country, phone, image) {
+                    if (phone == 'null') {
+                        var phn = '';
+                    }
+                    else {
+                        phn = phone;
+                    }
+                    document.getElementById('firstname').innerHTML = fname;
+                    document.getElementById('lastname').innerHTML = lname;
+                    document.getElementById('username').innerHTML = username;
+                    document.getElementById('email').innerHTML = email;
+                    document.getElementById('mobile').innerHTML = phn;
+                    document.getElementById('image').innerHTML = '<img width="100px"  height="100px" src="' + image + '" >';
+
+                }
+             
+                
+                $('#master').on('click', function (e) {
+                    if ($(this).is(':checked', true)) {
+                        $(".sub_chk").prop('checked', true);
+                    } else {
+                        $(".sub_chk").prop('checked', false);
+                    }
+                });
+
+                function multidelete() {
+                    var allVals = [];
+                    $(".sub_chk:checked").each(function () {
+                        allVals.push($(this).attr('data-id'));
+                    });
+
+                    if (allVals.length <= 0) {
+                        alert("Please select row.");
+                    }
+                    else {
+
+
+                        Swal.fire({
+                            //title: "Are you sure?",
+                            text: "Are you sure want to delete selected user?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#4ac18e",
+                            cancelButtonColor: "#f46a6a",
+                            confirmButtonText: "Delete"
+                        }).then(function (result) {
+                            if (result.value) {
+                                var join_selected_values = allVals.join(",");
+                                $.ajax({
+                                    type: 'post',
+                                    dataType: 'json',
+                                    url: '<%=urlapi%>deletemultiuser',
+                                    data: 'id=' + join_selected_values,
+                                    success: function (data) {
+                                        table.destroy();
+                                        getuserdata();
+                                        // var totalid = join_selected_values.split(",");
+                                        // totalid.forEach(element => {
+                                        //     var delid = element.replace(/ /g, "").split(",")
+                                        //     var table = $('#datatable-buttons').DataTable();
+                                        //     table.row(".delete_mem" + delid).remove().draw(false);
+                                        // });
+
+                                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> Delete User successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                    },
+                                    error: function (request, status, error) {
+                                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> Delete User failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+                function multiapprove() {
+                    var allVals = [];
+                    $(".sub_chk:checked").each(function () {
+                        allVals.push($(this).attr('data-id'));
+                    });
+
+                    if (allVals.length <= 0) {
+                        alert("Please select row.");
+                    }
+                    else {
+
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "to Approve selected user",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#4ac18e",
+                            cancelButtonColor: "#f46a6a",
+                            confirmButtonText: "Approve"
+                        }).then(function (result) {
+                            if (result.value) {
+                                var join_selected_values = allVals.join(",");
+                                $.ajax({
+                                    type: 'post',
+                                    dataType: 'json',
+                                    url: '<%=urlapi%>approvemultiuser',
+                                    data: 'id=' + join_selected_values,
+                                    success: function (data) {
+                                        table.destroy();
+                                        getuserdata();
+                                        // var totalid = join_selected_values.split(",");
+                                        // totalid.forEach(element => {
+                                        //     var delid = element.replace(/ /g, "").split(",")
+                                        //     var table = $('#datatable-buttons').DataTable();
+                                        //     table.ajax.reload();
+                                        // });
+
+                                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> Approve User successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                    },
+                                    error: function (request, status, error) {
+                                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> Approve User failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                    }
+                                });
+                            }
+                        });
+
+
+
+
+
+                    }
+
+
+                }
+                function multireject() {
+                    var allVals = [];
+                    $(".sub_chk:checked").each(function () {
+                        allVals.push($(this).attr('data-id'));
+                    });
+
+                    if (allVals.length <= 0) {
+                        alert("Please select row.");
+                    }
+                    else {
+
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "to Reject selected user",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#4ac18e",
+                            cancelButtonColor: "#f46a6a",
+                            confirmButtonText: "Reject"
+                        }).then(function (result) {
+                            if (result.value) {
+                                var join_selected_values = allVals.join(",");
+                                $.ajax({
+                                    type: 'post',
+                                    dataType: 'json',
+                                    url: '<%=urlapi%>rejectmultiuser',
+                                    data: 'id=' + join_selected_values,
+                                    success: function (data) {
+                                        table.destroy();
+                                        getuserdata();
+                                        // var totalid = join_selected_values.split(",");
+                                        // totalid.forEach(element => {
+                                        //     var delid = element.replace(/ /g, "").split(",")
+                                        //     // var table = $('#datatable-buttons').DataTable();
+                                        //     //  table.row(".delete_mem"+delid).remove().draw( false );
+                                        // });
+
+                                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> Reject User successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                    },
+                                    error: function (request, status, error) {
+                                        document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> Reject User failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                    }
+                                });
+                            }
+                        });
+
+
+
+
+
+                    }
+
+
+                }
+                function deleteuser(id) {
+
+                    Swal.fire({
+                        //title: "Are you sure?",
+                        text: "Are you sure to delete this user?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#4ac18e",
+                        cancelButtonColor: "#f46a6a",
+                        confirmButtonText: "Delete"
+                    }).then(function (result) {
+                        if (result.value) {
+                            $.ajax({
+                                type: 'delete',
+                                dataType: 'json',
+                                url: '<%=urlapi%>deleteuser/' + id,
+
+                                success: function (data) {
+                                    table.destroy();
+                                    getuserdata();
+                                    // var table = $('#datatable-buttons').DataTable();
+                                    // table.row(".delete_mem" + id).remove().draw(false);
+                                    document.getElementById('alertmsg').innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> Delete User successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                },
+                                error: function (request, status, error) {
+                                    document.getElementById('alertmsg').innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> Delete User failed.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+                                }
+                            });
+                        }
+                    });
+                }
+            </script>
+            <%- contentFor('FooterJs') %>
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script src="/public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+                <!-- Required datatable js -->
+                <script src="/public/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+                <script src="/public/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+                <!-- Buttons examples -->
+                <script src="/public/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                <script src="/public/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+                <script src="/public/assets/libs/jszip/jszip.min.js"></script>
+                <script src="/public/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+                <script src="/public/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+                <script src="/public/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+                <script src="/public/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+                <script src="/public/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+                <!-- Responsive examples -->
+                <script src="/public/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+                <script src="/public/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+               
+
+                <!-- Datatable init js -->
+                <!-- <script>
+     var table = $('#datatable-buttons').DataTable({
+        lengthChange: false,
+        buttons: [
+            { extend: 'pdf', text: 'Export' },
+            { extend: 'print', text: 'Print' }
+
+
+        ]
+       
+    });
+
+    table.buttons().container()
+        .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+        $(".dataTables_length select").addClass('form-select form-select-sm');
+</script> -->
+                <!-- <script src="/public/assets/js/pages/datatables.init.js"></script>  -->
+
+                <%- contentFor('BottomJs') %>

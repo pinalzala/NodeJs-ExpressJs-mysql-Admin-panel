@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+    
+        <meta charset="utf-8">
+        <title>Login | VGdemo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+        <meta content="Themesbrand" name="author">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="/public/assets/images/favicon.png">
+    
+        <%- include ('../Partials/HeaderStyle') %>
+    
+    </head>
+
+    <body>
+
+        <!-- Loader -->
+            <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+         <!-- Begin page -->
+         <div class="accountbg" style="background: url('/public/assets/images/bgold.jpg');background-size: cover;background-position: center;"></div>
+
+        <div class="account-pages mt-5 pt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-5 col-xl-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center mt-4">
+                                    <div class="mb-3">
+                                        <img src="/public/assets/images/favicon.png" alt="" height="100">
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <% if(error.length> 0) { %>
+                                        <div class="alert alert-danger text-center mb-4 flash" role="alert">
+                                            <%= error %>
+                                        </div>
+                                    <% } %>
+                                    <% if(message.length> 0) { %>
+                                        <div class="alert alert-success text-center mb-4 flash" role="alert">
+                                            <%= message %>
+                                        </div>
+                                    <% } %>
+    
+                                    <form class="form-horizontal" method="post" action="<%= base %>/post-login">
+    
+                                        <div class="mb-3">
+                                            <label class="form-label" for="username">Email</label>
+                                            <input type="text" class="form-control" id="username" name="email"
+                                            placeholder="Enter email">
+                                        </div>
+    
+                                        <div class="mb-3">
+                                            <label class="form-label" for="userpassword">Password</label>
+                                            <input type="password" class="form-control" id="userpassword" placeholder="Enter password" name="password"
+                                            value="123456">
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-sm-6">
+                                              
+                                  <input type="text" style="text-align: center; font-size: x-large;  height: 38px;   border-radius: 7px; background-image:url('/public/assets/images/cap.png');" readonly class="form-control" id="captch"  name="captch"
+                                                    value="123456">
+                                            </div>
+                                            <div class="col-sm-6 text-end">
+                                     <input type="text" class="form-control" id="captchtext" placeholder="Enter Captch" name="captchtext"
+                                            >                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-sm-3"></div>
+                                            <div class="col-sm-6">
+                                                <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+                                            </div>
+                                        </div>
+    
+                                        
+                                    </form>
+    
+                                </div>
+    
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include ('../Partials/VendorScript') %>
+
+        <script src="/public/assets/js/app.js"></script>
+<script>
+    makeid(5);
+    function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   document.getElementById('captch').value=result;
+}
+</script>
+    </body>
+</html>
